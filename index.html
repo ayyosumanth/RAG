@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSME Market Intelligence RAG Chatbot</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <h1>MSME Market Intelligence</h1>
+                <p class="header-subtitle">AI-Powered Business Intelligence & RAG Chatbot</p>
+            </div>
+            <div class="header-stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="total-companies">50</span>
+                    <span class="stat-label">Companies</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="avg-growth">34.2%</span>
+                    <span class="stat-label">Avg Growth</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value" id="market-cap">₹2.1B</span>
+                    <span class="stat-label">Market Cap</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="chat">
+                <span>💬</span> Chat Assistant
+            </button>
+            <button class="tab-btn" data-tab="dashboard">
+                <span>📊</span> Dashboard
+            </button>
+            <button class="tab-btn" data-tab="news">
+                <span>📰</span> News Feed
+            </button>
+            <button class="tab-btn" data-tab="explorer">
+                <span>🔍</span> Data Explorer
+            </button>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Chat Tab -->
+            <div id="chat-tab" class="tab-content active">
+                <div class="chat-container">
+                    <div class="chat-sidebar">
+                        <h3>Quick Actions</h3>
+                        <div class="quick-actions">
+                            <button class="quick-btn" data-query="Tell me about manufacturing companies">🏭 Manufacturing Overview</button>
+                            <button class="quick-btn" data-query="Show healthcare sector performance">🏥 Healthcare Performance</button>
+                            <button class="quick-btn" data-query="Compare technology companies">💻 Tech Comparison</button>
+                            <button class="quick-btn" data-query="Latest food processing trends">🍽️ Food Processing Trends</button>
+                            <button class="quick-btn" data-query="Risk analysis by sector">⚠️ Risk Analysis</button>
+                            <button class="quick-btn" data-query="High growth companies">📈 High Growth Companies</button>
+                        </div>
+                        <button class="btn btn--secondary clear-chat" id="clear-chat">Clear Chat</button>
+                    </div>
+                    <div class="chat-main">
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message ai-message">
+                                <div class="message-content">
+                                    <strong>🤖 MSME AI Assistant</strong>
+                                    <p>Welcome! I'm your MSME Market Intelligence assistant. I can help you analyze company data, sector trends, financial performance, and market insights. Ask me anything about the companies in our database!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-container">
+                            <div class="input-group">
+                                <input type="text" id="chat-input" placeholder="Ask about companies, sectors, financial performance..." class="form-control">
+                                <button id="send-btn" class="btn btn--primary">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard-tab" class="tab-content">
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Sector Distribution</h3>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="sector-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Revenue by Sector</h3>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="revenue-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Growth Rate Comparison</h3>
+                        <div class="chart-container" style="position: relative; height: 300px;">
+                            <canvas id="growth-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="dashboard-card">
+                        <h3>Key Performance Metrics</h3>
+                        <div class="metrics-grid">
+                            <div class="metric-item">
+                                <span class="metric-value">₹116.2M</span>
+                                <span class="metric-label">Avg Revenue</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-value">38.4%</span>
+                                <span class="metric-label">Avg Growth</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-value">18.9%</span>
+                                <span class="metric-label">Avg Margin</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-value">124</span>
+                                <span class="metric-label">Avg Employees</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- News Tab -->
+            <div id="news-tab" class="tab-content">
+                <div class="news-header">
+                    <h2>Latest MSME & Market News</h2>
+                    <div class="news-filters">
+                        <select id="sector-filter" class="form-control">
+                            <option value="">All Sectors</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Food Processing">Food Processing</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Textiles">Textiles</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="news-feed" id="news-feed">
+                    <!-- News articles will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Data Explorer Tab -->
+            <div id="explorer-tab" class="tab-content">
+                <div class="explorer-header">
+                    <h2>Company Data Explorer</h2>
+                    <div class="explorer-controls">
+                        <input type="text" id="search-input" placeholder="Search companies..." class="form-control">
+                        <select id="sector-filter-explorer" class="form-control">
+                            <option value="">All Sectors</option>
+                            <option value="Manufacturing">Manufacturing</option>
+                            <option value="Food Processing">Food Processing</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Textiles">Textiles</option>
+                        </select>
+                        <select id="risk-filter" class="form-control">
+                            <option value="">All Risk Levels</option>
+                            <option value="Low">Low Risk</option>
+                            <option value="Medium">Medium Risk</option>
+                            <option value="Medium-High">Medium-High Risk</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="companies-grid" id="companies-grid">
+                    <!-- Company cards will be populated by JavaScript -->
+                </div>
+            </div>
+        </main>
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>Processing your query...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

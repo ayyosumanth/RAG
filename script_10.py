@@ -1,4 +1,5 @@
-# MSME News Aggregator & Market Intelligence RAG Chatbot
+# Create comprehensive README.md
+readme_md = """# MSME News Aggregator & Market Intelligence RAG Chatbot
 
 A sophisticated RAG (Retrieval-Augmented Generation) chatbot built for MSME (Micro, Small, and Medium Enterprises) market intelligence. This system combines your company dataset with real-time news from multiple APIs to provide comprehensive market insights and business intelligence.
 
@@ -220,3 +221,9 @@ For issues or feature requests, please review the troubleshooting section or che
 ---
 
 **Built with ❤️ for MSME Market Intelligence**
+"""
+
+with open('README.md', 'w') as f:
+    f.write(readme_md)
+
+print("README.md created!")
